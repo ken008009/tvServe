@@ -98,7 +98,7 @@ export default {
                     }
                 },
                 {
-                    title: '实体卡分红级别',
+                    title: '用户级别',
                     dataIndex: 'vipThree'
                 },
                 {
@@ -207,11 +207,14 @@ export default {
                             <div>
                                 <a-button-group>
                                     <a-button type="primary" style="margin-left: 10px;" onClick={() => {
+                                        this.set_vip_level(v.userId, v.vipThree);
+                                    }}>设置用户级别</a-button>
+                                    <a-button type="primary" style="margin-left: 10px;" onClick={() => {
                                         this.level_update(v.userId);
                                     }}>级别权限</a-button>
-                                    <a-button type="primary" style="margin-left: 10px;" onClick={() => {
+                                    {/* <a-button type="primary" style="margin-left: 10px;" onClick={() => {
                                         this.principal_update(v.userId);
-                                    }}>实体卡分红级别</a-button>
+                                    }}>实体卡分红级别</a-button> */}
                                     <a-button type="primary" style="margin-left: 10px;" onClick={() => {
                                         this.undo_update(v.userId);
                                     }}>重置申请</a-button>
@@ -571,6 +574,43 @@ export default {
                 onOk: () => {
                     return new Promise((resolve, reject) => {
                         Gai.vip_update({ user_id: id, vip: value }).then(res => {
+                            resolve()
+                            this.getList()
+                        }).catch(res => {
+                            reject()
+                        })
+                    })
+                }
+            })
+        },
+        set_vip_level(userId, defaultValue) {
+            let vipThree = defaultValue !== undefined && defaultValue !== null ? String(defaultValue) : undefined
+            this.$confirm({
+                title: `设置用户级别`,
+                content: (
+                    <a-select style="width:200px" defaultValue={vipThree} placeholder="选择级别" onChange={(val) => {
+                        vipThree = val
+                    }}>
+                        <a-select-option value="0">0</a-select-option>
+                        <a-select-option value="1">1</a-select-option>
+                        <a-select-option value="2">2</a-select-option>
+                        <a-select-option value="3">3</a-select-option>
+                        <a-select-option value="4">4</a-select-option>
+                        <a-select-option value="5">5</a-select-option>
+                    </a-select>
+                ),
+                centered: true,
+                onOk: () => {
+                    return new Promise((resolve, reject) => {
+                        if (vipThree === undefined) {
+                            this.$notification.warning({
+                                message: '提示',
+                                description: '请选择级别'
+                            })
+                            reject()
+                            return
+                        }
+                        Gai.set_vip_three({ userId, vipThree }).then(res => {
                             resolve()
                             this.getList()
                         }).catch(res => {

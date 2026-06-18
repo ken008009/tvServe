@@ -199,6 +199,13 @@ export default {
             data: parameter
         })
     },
+    set_vip_three: (parameter) => {
+        return axios({
+            url: `${api8005}/set_vip_three`,
+            method: 'post',
+            data: parameter
+        })
+    },
     set_pass: (parameter) => {
         return axios({
             url: `${api8005}/set_pass`,
