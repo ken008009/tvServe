@@ -114,6 +114,13 @@ export default {
             params: parameter
         })
     },
+    card_two_list_new: (parameter) => {
+        return axios({
+            url: `${api8005}/card_two_list_new`,
+            method: 'get',
+            params: parameter
+        })
+    },
     /* 登录相关 */
     login: (parameter) => {
         return axios({

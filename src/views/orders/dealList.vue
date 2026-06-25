@@ -5,13 +5,13 @@
                 <a-col :xs="12" :md="6" :lg="6" :xl="4">
                     <a-input v-model="searchData.address" placeholder="账户" @keyup.enter="getListTwo" />
                 </a-col>
-                <a-col :xs="12" :md="6" :lg="6" :xl="4">
+                <!-- <a-col :xs="12" :md="6" :lg="6" :xl="4">
                     <a-select allowClear v-model="searchData.status" style="width:100%" placeholder="全部" @change="getListTwo">
                         <a-select-option value="0">未提交</a-select-option>
                         <a-select-option value="1">已提交</a-select-option>
                         <a-select-option value="2">成功</a-select-option>
                     </a-select>
-                </a-col>
+                </a-col> -->
                 <a-col :xs="12" :md="6" :lg="6" :xl="4">
                     <a-button-group>
                         <a-button type="primary" :loading="loading" @click="getListTwo">确定筛选</a-button>
@@ -40,8 +40,8 @@ export default {
                     customRender: (v) => v,
                 },
                 {
-                    title: '卡号',
-                    dataIndex: 'cardNumberRelTwo',
+                    title: '数量',
+                    dataIndex: 'num',
                 },
                 {
                     title: '创建时间',
@@ -96,19 +96,6 @@ export default {
                     dataIndex: 'phoneCountryCode',
                 },
                 {
-                    title: '实体卡ID',
-                    dataIndex: 'cardId',
-                },
-                {
-                    title: '实体卡状态',
-                    dataIndex: 'status',
-                    customRender: (v) => {
-                        if (v === '1') return '已提交'
-                        if (v === '2') return '成功'
-                        return '未提交'
-                    }
-                },
-                {
                     title: '身份证号',
                     dataIndex: 'idCard',
                 },
@@ -119,24 +106,24 @@ export default {
                         if (v === 'g') return '男'
                         return '女'
                     }
-                },
-                {
-                    title: '操作',
-                    key: 'action',
-                    fixed: 'right',
-                    width: 110,
-                    customRender: (v) => {
-                        return (
-                            <div>
-                                <a-button-group>
-                                    <a-button type="primary" style="margin-left: 10px;" onClick={() => {
-                                        this.bind_card(v.id);
-                                    }}>绑定实体卡号</a-button>
-                                </a-button-group>
-                            </div>
-                        )
-                    }
                 }
+                // {
+                //     title: '操作',
+                //     key: 'action',
+                //     fixed: 'right',
+                //     width: 110,
+                //     customRender: (v) => {
+                //         return (
+                //             <div>
+                //                 <a-button-group>
+                //                     <a-button type="primary" style="margin-left: 10px;" onClick={() => {
+                //                         this.bind_card(v.id);
+                //                     }}>绑定实体卡号</a-button>
+                //                 </a-button-group>
+                //             </div>
+                //         )
+                //     }
+                // }
             ],
             searchData: {
                 address: '',
@@ -147,7 +134,7 @@ export default {
     methods: {
         getList() {
             this.loading = true
-            Gai.trade_list({
+            Gai.card_two_list_new({
                 page: this.current,
                 ...this.searchData
             }).then((res) => {

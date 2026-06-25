@@ -81,6 +81,12 @@ export const asyncRouterMap = [
                 component: () => import('@/views/orders/dealList'),
                 meta: { title: '实体卡申请列表', keepAlive: true, icon: "setting", permission: ['dashboard'] },
             },
+            {
+                path: '/dealList2',
+                name: 'dealList2',
+                component: () => import('@/views/orders/dealList2'),
+                meta: { title: '待绑定实体卡列表', keepAlive: true, icon: "setting", permission: ['dashboard'] },
+            },
             // {
             //     path: '/configCSD',
             //     name: 'configCSD',
